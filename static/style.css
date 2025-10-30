@@ -22,6 +22,25 @@ body {
   width: 350px;
 }
 
+/* 首页更大布局 */
+.home-container {
+  width: 860px;
+  max-width: 92vw;
+  padding: 48px 40px;
+}
+
+.home-container h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+.home-container .link button {
+  width: auto;
+  min-width: 140px;
+  padding: 12px 18px;
+  font-size: 16px;
+}
+
 .container h2 {
   text-align: center;
   margin-bottom: 30px;

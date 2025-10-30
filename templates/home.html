@@ -5,8 +5,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
+    <div class="container home-container">
         <h2>Welcome, {{ username }}!</h2>
+        <div class="link" style="margin: 12px 0;">
+            <a href="{{ url_for('upload_file') }}"><button>上传文件</button></a>
+            {% if is_admin %}
+            <a href="{{ url_for('admin_index') }}" style="margin-left:8px;"><button>管理员后台</button></a>
+            {% endif %}
+        </div>
         <div class="link">
             <a href="{{ url_for('logout') }}"><button>Logout</button></a>
         </div>

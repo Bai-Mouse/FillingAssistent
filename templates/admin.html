@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>管理员后台</h2>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">用户ID</th>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">用户名</th>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">是否管理员</th>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">文件</th>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td style="padding:6px;">{{ u.id }}</td>
+                    <td style="padding:6px;">{{ u.username }}</td>
+                    <td style="padding:6px;">{{ '是' if u.is_admin else '否' }}</td>
+                    <td style="padding:6px;">
+                        {% if u.upload %}
+                            <a href="{{ url_for('uploaded_file', filename=u.upload.filename) }}" target="_blank">{{ u.upload.filename }}</a>
+                        {% else %}
+                            无
+                        {% endif %}
+                    </td>
+                    <td style="padding:6px;">
+                        {% if u.upload %}
+                        <form method="post" action="{{ url_for('admin_delete_file', user_id=u.id) }}" style="display:inline;">
+                            <button type="submit">删除文件</button>
+                        </form>
+                        {% endif %}
+                        {% if not u.is_admin %}
+                        <form method="post" action="{{ url_for('admin_delete_user', user_id=u.id) }}" style="display:inline; margin-left:6px;">
+                            <button type="submit">删除用户</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="link" style="margin-top:12px;">
+            <a href="{{ url_for('home') }}"><button>返回首页</button></a>
+        </div>
+    </div>
+</body>
+</html>
+
+
